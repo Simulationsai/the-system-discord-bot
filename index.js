@@ -966,15 +966,15 @@ async function logFormSubmission(user, data) {
   await formLogsChannel.send({ embeds: [embed] }).catch(() => {});
 }
 
+// Simple HTTP server for Render port detection (Web Service requirement)
+import http from 'http';
+
 // Setup channels when bot is ready
 client.once('clientReady', async () => {
   await new Promise(resolve => setTimeout(resolve, 2000)); // Wait 2 seconds
   await setupVerificationChannel();
   await setupFormChannel();
 });
-
-// Simple HTTP server for Render port detection (Web Service requirement)
-import http from 'http';
 
 const PORT = process.env.PORT || 3000;
 

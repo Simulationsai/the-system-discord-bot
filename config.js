@@ -40,7 +40,7 @@ export const config = {
 
   // XP System Configuration
   xp: {
-    ENABLED_CHANNEL: '1471862142126002351', // #engage channel
+    ENABLED_CHANNEL: '1471896848917729483', // #engage channel (updated)
     XP_PER_POST: 10,
     COOLDOWN_SECONDS: 120, // 2 minutes
     PROMOTION_THRESHOLD: 1000 // XP needed for Waitlist → Early Access upgrade

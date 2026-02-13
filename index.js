@@ -719,6 +719,45 @@ client.on('messageCreate', async (message) => {
     return;
   }
 
+  // Get role IDs command (Admin only)
+  if (message.content.toLowerCase() === '!get-roles') {
+    if (!member.permissions.has(PermissionFlagsBits.Administrator)) {
+      return message.reply('❌ Only administrators can run this command.');
+    }
+
+    try {
+      const roles = await message.guild.roles.fetch();
+      const roleList = [
+        'Admin',
+        'Moderator',
+        'Early Access',
+        'Waitlist',
+        'Form Submitted',
+        'Verified',
+        'Unverified'
+      ];
+
+      const roleInfo = roleList.map(roleName => {
+        const role = roles.find(r => r.name === roleName);
+        return role 
+          ? `**${roleName}**: \`${role.id}\``
+          : `**${roleName}**: ❌ Not found`;
+      }).join('\n');
+
+      await message.reply({
+        embeds: [new EmbedBuilder()
+          .setTitle('📋 Role IDs')
+          .setDescription(roleInfo)
+          .setColor(0x5865F2)
+          .setFooter({ text: 'Copy these IDs and update config.js' })
+        ]
+      });
+    } catch (error) {
+      await message.reply(`❌ Error: ${error.message}`);
+    }
+    return;
+  }
+
   // Link filtering in #engage channel
   if (message.channel.id === config.channels.ENGAGE) {
     await handleEngageChannel(message);

@@ -734,7 +734,21 @@ client.once('clientReady', async () => {
   await setupFormChannel();
 });
 
-// Login
+// Simple HTTP server for Render port detection (Web Service requirement)
+import http from 'http';
+
+const PORT = process.env.PORT || 3000;
+
+const server = http.createServer((req, res) => {
+  res.writeHead(200, { 'Content-Type': 'text/plain' });
+  res.end('THE SYSTEM Bot is running!');
+});
+
+server.listen(PORT, () => {
+  console.log(`🌐 HTTP server listening on port ${PORT}`);
+});
+
+// Login bot
 const token = process.env.DISCORD_BOT_TOKEN;
 if (!token) {
   console.error('❌ DISCORD_BOT_TOKEN not found in .env file');

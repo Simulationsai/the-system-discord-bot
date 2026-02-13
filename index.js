@@ -51,8 +51,17 @@ client.once('clientReady', async () => {
                            guild.channels.cache.find(c => c.type === ChannelType.GuildText);
         
         if (setupChannel) {
-          await setupChannel.send('🚀 **Auto-Setup Starting...** Bot detected missing channels/roles. Setting up automatically...');
-          await setupDiscordServer(guild, setupChannel);
+          // Wait a bit for bot to be fully ready
+          await new Promise(resolve => setTimeout(resolve, 3000));
+          
+          await setupChannel.send('🚀 **Auto-Setup Starting...**\nBot detected missing channels/roles. Setting up automatically...\n\n**Note:** Bot needs Administrator permission to create channels/roles. If setup fails, please give bot Administrator permission and run `!setup` command.');
+          
+          try {
+            await setupDiscordServer(guild, setupChannel);
+          } catch (setupError) {
+            await setupChannel.send(`❌ **Setup Failed:** ${setupError.message}\n\n**Solution:**\n1. Go to Server Settings → Roles\n2. Find bot role (usually named "The System")\n3. Enable "Administrator" permission\n4. Run \`!setup\` command again`);
+            console.error('Setup error:', setupError);
+          }
         } else {
           console.log('⚠️  No channel found for setup messages. Please run !setup command manually.');
         }

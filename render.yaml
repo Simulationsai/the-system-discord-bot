@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: the-system-bot
+    env: node
+    buildCommand: npm install
+    startCommand: node index.js
+    envVars:
+      - key: DISCORD_BOT_TOKEN
+        sync: false

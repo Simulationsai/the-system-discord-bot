@@ -33,7 +33,7 @@ const formSubmissions = new Set(); // Track who has submitted forms
 /**
  * Initialize bot
  */
-client.once('ready', async () => {
+client.once('clientReady', async () => {
   console.log(`✅ THE SYSTEM Bot is online as ${client.user.tag}`);
   console.log(`📊 Monitoring ${client.guilds.cache.size} server(s)`);
   
@@ -728,7 +728,7 @@ async function logFormSubmission(user, data) {
 }
 
 // Setup channels when bot is ready
-client.once('ready', async () => {
+client.once('clientReady', async () => {
   await new Promise(resolve => setTimeout(resolve, 2000)); // Wait 2 seconds
   await setupVerificationChannel();
   await setupFormChannel();
